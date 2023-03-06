@@ -3,6 +3,7 @@
 //Array numeri
 const randomNumber = [];
 const userNumber = [];
+const haveNumber = [];
 
 const maxNumber = 5;
 
@@ -27,40 +28,60 @@ function generateNumber(maxNumber, min, max){
 
 
 function startGame(){
-    generateNumber(maxNumber, 1, 100);
-    console.log(randomNumber);
+    generateNumber(maxNumber, 1, 99);
     document.querySelector('main').innerText = randomNumber;
     setTimeout(removeNumber, 5000);
+    setTimeout(getUserNumber, 6000);
+
 }
 
 
 function removeNumber(){
     document.querySelector('main').innerText = '';
-    getUserNumber(maxNumber);
 }
 
-function getUserNumber (maxNumber){
+//Acquisisce i numeri dall'utente
+function getUserNumber(){
     let i = 1;
     while(userNumber.length < maxNumber){
-        let numberSingle = prompt(`Inserisci il ${i}° numero`);
-            if(!isNaN(numberSingle)){
-            userNumber.push(numberSingle);
-            i++;
-            debugger;
-            }
+        let numberSingle = Number(prompt(`Inserisci il ${i}° numero`));
+        if(!isNaN(numberSingle)){
+        userNumber.push(numberSingle);
+        i++;
         }
     }
+    const haveNumber = checkNumber();
+    stampResult();
+    return haveNumber;
+}
 
 
 
+//Confrontare se i numeri inseriti sono presenti nell array dei numeri generati
+function checkNumber(){
+    // const haveNumber = [];
+    const notHaveNumber = [];
+    for(let i = 0; i < randomNumber.length; i++){
+        if(randomNumber.includes(userNumber[i])){
+            haveNumber.push(userNumber[i]);
+        } else {
+            notHaveNumber.push(userNumber[i]);
+        }
+    }
+    return haveNumber;
+}
 
-//Alla pressione del bottone visualizzare in pagina i numeri dell'array  
-//Avviare un timer di 30 secondi  
-// => alla scadenza:  
-// - Rimuove i numeri dalla pagina
-// - Avvia un prompt per 5 volte dove inserire i numeri che erano sulla pagina
-//I numeri forniti vanno inseriti nell'array numeri utente  
-//Confrontare se i numeri inseriti sono presenti nell array dei numeri generati  
-//Visualizzare il risultato del confronto  
+
+function stampResult(){
+    console.log(`Numeri generati ${randomNumber}`);
+    console.log(`Numeri immessi ${userNumber}`);
+    console.log(`Hai indovinato: ${haveNumber.length}, eccoli: ${haveNumber}`);
+    document.querySelector('main').append(`Numeri generati: ${randomNumber} `);
+    document.querySelector('main').append(`Numeri immessi: ${userNumber} `);
+    document.querySelector('main').append(`Hai indovinato: ${haveNumber.length} numeri, eccoli: ${haveNumber}`);
+    // document.querySelector('main').innerText = `Numeri immessi: ${userNumber}`;
+    // document.querySelector('main').innerText = `Hai indovinato: ${haveNumber.length} numeri, eccoli: ${haveNumber}`;
+}
+
 
 
