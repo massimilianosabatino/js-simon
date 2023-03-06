@@ -4,6 +4,8 @@
 const randomNumber = [];
 const userNumber = [];
 
+const maxNumber = 5;
+
 const start = document.getElementById('start');
 
 //Numeri random
@@ -16,16 +18,39 @@ function getRandom(min, max) {
 function generateNumber(maxNumber, min, max){
     while(randomNumber.length < maxNumber){
         const numberSingle = getRandom(min, max);
-        if(!randomNumber.includes(numberSingle)){
+        // if(!randomNumber.includes(numberSingle)){
             randomNumber.push(numberSingle);
-        }
+        // }
     }
 }
 
+
+
 function startGame(){
-    generateNumber(5, 1, 100);
+    generateNumber(maxNumber, 1, 100);
     console.log(randomNumber);
+    document.querySelector('main').innerText = randomNumber;
+    setTimeout(removeNumber, 5000);
 }
+
+
+function removeNumber(){
+    document.querySelector('main').innerText = '';
+    getUserNumber(maxNumber);
+}
+
+function getUserNumber (maxNumber){
+    let i = 1;
+    while(userNumber.length < maxNumber){
+        let numberSingle = prompt(`Inserisci il ${i}° numero`);
+            if(!isNaN(numberSingle)){
+            userNumber.push(numberSingle);
+            i++;
+            debugger;
+            }
+        }
+    }
+
 
 
 
